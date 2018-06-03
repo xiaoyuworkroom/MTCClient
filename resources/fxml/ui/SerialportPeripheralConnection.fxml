@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="xiaoyu.mtc.controller.SerialportManager">
+   <children>
+      <ListView layoutX="14.0" layoutY="14.0" prefHeight="345.0" prefWidth="460.0" />
+      <Button layoutX="507.0" layoutY="14.0" mnemonicParsing="false" prefWidth="64.0" text="连接" />
+      <Button layoutX="511.0" layoutY="363.0" mnemonicParsing="false" text="关闭" />
+      <Button fx:id="btnRefresh" layoutX="507.0" layoutY="51.0" mnemonicParsing="false" onAction="#Refresh" prefHeight="23.0" prefWidth="64.0" text="刷新" ></Button>
+   </children>
+</AnchorPane>

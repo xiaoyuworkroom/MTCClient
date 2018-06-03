@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+      minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0"
+      xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
+fx:controller="xiaoyu.mtc.controller.MainController">
+   <children>
+      <ToolBar prefHeight="102.0" prefWidth="600.0">
+        <items>
+           <Button fx:id="btnSampling" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" text="采样" />
+           <Button fx:id="btnDataAnalysis" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" text="数据分析" />
+           <Button fx:id="btnReport" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" text="报告" />
+            <Separator orientation="VERTICAL" />
+           <Button fx:id="btnParameter" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" text="基本参数" />
+          <Button fx:id="btnPeripheral" mnemonicParsing="false" onAction="#ConnectionDefault" prefHeight="64.0" prefWidth="64.0" text="外设设置" />
+            <SplitMenuButton mnemonicParsing="false" prefHeight="64.0" prefWidth="80.0" text="系统设置">
+              <items>
+                <MenuItem mnemonicParsing="false" text="连接默认接口" />
+                <MenuItem mnemonicParsing="false" text="选择设备" />
+              </items>
+            </SplitMenuButton>
+        </items>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </ToolBar>
+      <AnchorPane prefHeight="366.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
+         <children>
+            
+         </children></AnchorPane>
+      <HBox prefHeight="25.0" prefWidth="600.0">
+         <children>
+            <Label text="Label" />
+            <Pane prefHeight="21.0" prefWidth="533.0" />
+            <Label text="Label" />
+         </children>
+      </HBox>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</VBox>
