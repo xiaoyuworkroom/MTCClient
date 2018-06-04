@@ -19,8 +19,8 @@ import xiaoyu.mtc.util.SerialPort.serialException.*;
 
 /**
  * 串口服务类，提供打开、关闭串口，读取、发送串口数据等服务（采用单例设计模式）
- * @author zhong
  *
+ * @author zhong
  */
 public class SerialPortTool {
 
@@ -34,10 +34,12 @@ public class SerialPortTool {
     }
 
     //私有化SerialTool类的构造方法，不允许其他类生成SerialTool对象
-    private SerialPortTool() {}
+    private SerialPortTool() {
+    }
 
     /**
      * 获取提供服务的SerialTool对象
+     *
      * @return serialTool
      */
     public static SerialPortTool getSerialTool() {
@@ -50,6 +52,7 @@ public class SerialPortTool {
 
     /**
      * 查找所有可用端口
+     *
      * @return 可用端口名称列表
      */
     public static final ArrayList<String> findPort() {
@@ -71,18 +74,18 @@ public class SerialPortTool {
 
     /**
      * 打开串口
+     *
      * @param portName 端口名称
      * @param baudrate 波特率
      * @return 串口对象
      * @throws SerialPortParameterFailure 设置串口参数失败
-     * @throws NotASerialPort 端口指向设备不是串口类型
-     * @throws NoSuchPort 没有该端口对应的串口设备
-     * @throws PortInUse 端口已被占用
+     * @throws NotASerialPort             端口指向设备不是串口类型
+     * @throws NoSuchPort                 没有该端口对应的串口设备
+     * @throws PortInUse                  端口已被占用
      */
     public static final SerialPort openPort(String portName, int baudrate) throws SerialPortParameterFailure, NotASerialPort, NoSuchPort, PortInUse {
 
         try {
-
             //通过端口名识别端口
             CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(portName);
 
@@ -104,8 +107,7 @@ public class SerialPortTool {
                 //System.out.println("Open " + portName + " sucessfully !");
                 return serialPort;
 
-            }
-            else {
+            } else {
                 //不是串口
                 throw new NotASerialPort();
             }
@@ -118,6 +120,7 @@ public class SerialPortTool {
 
     /**
      * 关闭串口
+     *
      * @param serialPort 待关闭的串口对象
      */
     public static void closePort(SerialPort serialPort) {
@@ -129,9 +132,10 @@ public class SerialPortTool {
 
     /**
      * 往串口发送数据
+     *
      * @param serialPort 串口对象
-     * @param order    待发送数据
-     * @throws SendDataToSerialPortFailure 向串口发送数据失败
+     * @param order      待发送数据
+     * @throws SendDataToSerialPortFailure        向串口发送数据失败
      * @throws SerialPortOutputStreamCloseFailure 关闭串口对象的输出流出错
      */
     public static void sendToPort(SerialPort serialPort, byte[] order) throws SendDataToSerialPortFailure, SerialPortOutputStreamCloseFailure {
@@ -161,9 +165,10 @@ public class SerialPortTool {
 
     /**
      * 从串口读取数据
+     *
      * @param serialPort 当前已建立连接的SerialPort对象
      * @return 读取到的数据
-     * @throws ReadDataFromSerialPortFailure 从串口读取数据时出错
+     * @throws ReadDataFromSerialPortFailure     从串口读取数据时出错
      * @throws SerialPortInputStreamCloseFailure 关闭串口对象输入流出错
      */
     public static byte[] readFromPort(SerialPort serialPort) throws ReadDataFromSerialPortFailure, SerialPortInputStreamCloseFailure {
@@ -189,7 +194,7 @@ public class SerialPortTool {
                     in.close();
                     in = null;
                 }
-            } catch(IOException e) {
+            } catch (IOException e) {
                 throw new SerialPortInputStreamCloseFailure();
             }
 
@@ -201,6 +206,7 @@ public class SerialPortTool {
 
     /**
      * 添加监听器
+     *
      * @param port     串口对象
      * @param listener 串口监听器
      * @throws TooManyListeners 监听类对象过多
