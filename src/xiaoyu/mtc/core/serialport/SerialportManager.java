@@ -39,6 +39,10 @@ public class SerialportManager {
 
     private List<String> serialPortList = null;
 
+    public SerialPort getSerialPort() {
+        return serialPort;
+    }
+
     private SerialPort serialPort = null;
 
     // </editor-fold>
@@ -57,7 +61,7 @@ public class SerialportManager {
         try {
             serialPort = null;
             serialPort = SerialPortTool.openPort(name, baudrate);
-            serialPort.addEventListener(new SerialListener());
+            addListener(serialPort, new SerialListener());
             if (serialPort != null) return true;
         } catch (NotASerialPort notASerialPort) {
             notASerialPort.printStackTrace();
@@ -67,8 +71,8 @@ public class SerialportManager {
             serialPortParameterFailure.printStackTrace();
         } catch (NoSuchPort noSuchPort) {
             noSuchPort.printStackTrace();
-        } catch (TooManyListenersException e) {
-            e.printStackTrace();
+        } catch (TooManyListeners tooManyListeners) {
+            tooManyListeners.printStackTrace();
         }
 
         return false;
@@ -79,7 +83,8 @@ public class SerialportManager {
      * 关闭端口
      */
     public void Close() {
-        if (serialPort != null) serialPort.close();
+        if (serialPort != null)
+            serialPort.close();
     }
 
     //监听数据
@@ -92,16 +97,13 @@ public class SerialportManager {
      * @throws TooManyListeners 监听类对象过多
      */
     public static void addListener(SerialPort port, SerialPortEventListener listener) throws TooManyListeners {
-
         try {
-
             //给串口添加监听器
             port.addEventListener(listener);
             //设置当有数据到达时唤醒监听接收线程
             port.notifyOnDataAvailable(true);
             //设置当通信中断时唤醒中断线程
             port.notifyOnBreakInterrupt(true);
-
         } catch (TooManyListenersException e) {
             throw new TooManyListeners();
         }
@@ -148,7 +150,7 @@ public class SerialportManager {
 
                 case SerialPortEvent.DATA_AVAILABLE: // 1 串口存在可用数据
 
-                    //System.out.println("found data");
+//                    System.out.println("found data");
                     byte[] data = null;
 
                     try {
@@ -163,35 +165,37 @@ public class SerialportManager {
                                 JOptionPane.showMessageDialog(null, "读取数据过程中未获取到有效数据！请检查设备或程序！", "错误", JOptionPane.INFORMATION_MESSAGE);
                                 System.exit(0);
                             } else {
-                                String dataOriginal = new String(data);    //将字节数组数据转换位为保存了原始数据的字符串
-                                String dataValid = "";    //有效数据（用来保存原始数据字符串去除最开头*号以后的字符串）
-                                String[] elements = null;    //用来保存按空格拆分原始字符串后得到的字符串数组
-                                //解析数据
-                                if (dataOriginal.charAt(0) == '*') {    //当数据的第一个字符是*号时表示数据接收完成，开始解析
-                                    dataValid = dataOriginal.substring(1);
-                                    elements = dataValid.split(" ");
-                                    if (elements == null || elements.length < 1) {    //检查数据是否解析正确
-                                        JOptionPane.showMessageDialog(null, "数据解析过程出错，请检查设备或程序！", "错误", JOptionPane.INFORMATION_MESSAGE);
-                                        System.exit(0);
-                                    } else {
-                                        try {
-                                            //更新界面Label值
-                                            /*for (int i=0; i<elements.length; i++) {
-                                                System.out.println(elements[i]);
-                                            }*/
-                                            //System.out.println("win_dir: " + elements[5]);
-//                                            tem.setText(elements[0] + " ℃");
-//                                            hum.setText(elements[1] + " %");
-//                                            pa.setText(elements[2] + " hPa");
-//                                            rain.setText(elements[3] + " mm");
-//                                            win_sp.setText(elements[4] + " m/s");
-//                                            win_dir.setText(elements[5] + " °");
-                                        } catch (ArrayIndexOutOfBoundsException e) {
-                                            JOptionPane.showMessageDialog(null, "数据解析过程出错，更新界面数据失败！请检查设备或程序！", "错误", JOptionPane.INFORMATION_MESSAGE);
-                                            System.exit(0);
-                                        }
-                                    }
-                                }
+                                String dataOriginal = new String(data);
+                                System.out.println(dataOriginal);
+//                                String dataOriginal = new String(data);    //将字节数组数据转换位为保存了原始数据的字符串
+//                                String dataValid = "";    //有效数据（用来保存原始数据字符串去除最开头*号以后的字符串）
+//                                String[] elements = null;    //用来保存按空格拆分原始字符串后得到的字符串数组
+//                                //解析数据
+//                                if (dataOriginal.charAt(0) == '*') {    //当数据的第一个字符是*号时表示数据接收完成，开始解析
+//                                    dataValid = dataOriginal.substring(1);
+//                                    elements = dataValid.split(" ");
+//                                    if (elements == null || elements.length < 1) {    //检查数据是否解析正确
+//                                        JOptionPane.showMessageDialog(null, "数据解析过程出错，请检查设备或程序！", "错误", JOptionPane.INFORMATION_MESSAGE);
+//                                        System.exit(0);
+//                                    } else {
+//                                        try {
+//                                            //更新界面Label值
+//                                            /*for (int i=0; i<elements.length; i++) {
+//                                                System.out.println(elements[i]);
+//                                            }*/
+//                                            //System.out.println("win_dir: " + elements[5]);
+////                                            tem.setText(elements[0] + " ℃");
+////                                            hum.setText(elements[1] + " %");
+////                                            pa.setText(elements[2] + " hPa");
+////                                            rain.setText(elements[3] + " mm");
+////                                            win_sp.setText(elements[4] + " m/s");
+////                                            win_dir.setText(elements[5] + " °");
+//                                        } catch (ArrayIndexOutOfBoundsException e) {
+//                                            JOptionPane.showMessageDialog(null, "数据解析过程出错，更新界面数据失败！请检查设备或程序！", "错误", JOptionPane.INFORMATION_MESSAGE);
+//                                            System.exit(0);
+//                                        }
+//                                    }
+//                                }
                             }
 
                         }

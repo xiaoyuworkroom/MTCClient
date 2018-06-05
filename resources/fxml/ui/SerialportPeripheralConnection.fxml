@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="xiaoyu.mtc.controller.SerialportManager">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="xiaoyu.mtc.controller.SerialportPeripheralConnectionController">
    <children>
-      <ListView layoutX="14.0" layoutY="14.0" prefHeight="345.0" prefWidth="460.0" />
-      <Button layoutX="507.0" layoutY="14.0" mnemonicParsing="false" prefWidth="64.0" text="连接" />
-      <Button layoutX="511.0" layoutY="363.0" mnemonicParsing="false" text="关闭" />
-      <Button fx:id="btnRefresh" layoutX="507.0" layoutY="51.0" mnemonicParsing="false" onAction="#Refresh" prefHeight="23.0" prefWidth="64.0" text="刷新" ></Button>
+      <Button layoutX="150.0" layoutY="104.0" mnemonicParsing="false" onAction="#Connection" prefWidth="64.0" text="连接" />
+      <Button fx:id="btnRefresh" layoutX="78.0" layoutY="104.0" mnemonicParsing="false" onAction="#Refresh" prefHeight="23.0" prefWidth="64.0" text="刷新" />
+      <ComboBox fx:id="comboBoxSerialPort" layoutX="81.0" layoutY="18.0" prefHeight="23.0" prefWidth="133.0" />
+      <TextField fx:id="textFieldBaudrate" layoutX="81.0" layoutY="55.0" prefHeight="23.0" prefWidth="133.0" promptText="波特率" text="9600" />
+      <Label layoutX="19.0" layoutY="22.0" text="端      口" />
+      <Label layoutX="19.0" layoutY="59.0" text="波特率" />
    </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
 </AnchorPane>
