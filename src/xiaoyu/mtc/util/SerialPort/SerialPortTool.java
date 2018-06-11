@@ -147,7 +147,6 @@ public class SerialPortTool {
             out = serialPort.getOutputStream();
             out.write(order);
             out.flush();
-
         } catch (IOException e) {
             throw new SendDataToSerialPortFailure();
         } finally {
@@ -180,10 +179,21 @@ public class SerialPortTool {
 
             in = serialPort.getInputStream();
             int bufflenth = in.available();        //获取buffer里的数据长度
-
+            System.out.printf("(%d)", bufflenth);
             while (bufflenth != 0) {
                 bytes = new byte[bufflenth];    //初始化byte数组为buffer中数据的长度
                 in.read(bytes);
+
+                for(int i = 0; i < bytes.length && i < bufflenth; i++){
+                    String hex = Integer.toHexString(bytes[i] & 0xFF);
+                    if (hex.length() == 1)
+                    {
+                        hex = '0' + hex;
+                    }
+                    //解码并输出数据
+                    System.out.print(hex);
+                }
+                System.out.print("/");
                 bufflenth = in.available();
             }
         } catch (IOException e) {

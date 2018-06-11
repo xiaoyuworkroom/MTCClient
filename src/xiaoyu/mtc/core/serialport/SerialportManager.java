@@ -3,6 +3,7 @@ package xiaoyu.mtc.core.serialport;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
+import xiaoyu.mtc.util.NumberUtil;
 import xiaoyu.mtc.util.SerialPort.SerialPortTool;
 import xiaoyu.mtc.util.SerialPort.serialException.*;
 
@@ -57,7 +58,7 @@ public class SerialportManager {
      * @param baudrate 波特率
      * @return 是否连接成功
      */
-    public boolean Connection(String name, int baudrate) {
+    public boolean connection(String name, int baudrate) {
         try {
             serialPort = null;
             serialPort = SerialPortTool.openPort(name, baudrate);
@@ -80,11 +81,26 @@ public class SerialportManager {
 
 
     /**
+     * 发送数据到端口
+     *
+     * @param order
+     * @return
+     * @throws SerialPortOutputStreamCloseFailure
+     * @throws SendDataToSerialPortFailure
+     */
+    public boolean sendToPort(byte[] order) throws SerialPortOutputStreamCloseFailure, SendDataToSerialPortFailure {
+        if (serialPort != null) {
+            SerialPortTool.sendToPort(serialPort, order);
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * 关闭端口
      */
-    public void Close() {
-        if (serialPort != null)
-            serialPort.close();
+    public void close() {
+        if (serialPort != null) serialPort.close();
     }
 
     //监听数据
@@ -149,24 +165,26 @@ public class SerialportManager {
                     break;
 
                 case SerialPortEvent.DATA_AVAILABLE: // 1 串口存在可用数据
-
-//                    System.out.println("found data");
-                    byte[] data = null;
+                    byte[] data = new byte[1024];
 
                     try {
                         if (serialPort == null) {
                             JOptionPane.showMessageDialog(null, "串口对象为空！监听失败！", "错误", JOptionPane.INFORMATION_MESSAGE);
                         } else {
                             data = SerialPortTool.readFromPort(serialPort);    //读取数据，存入字节数组
-                            //System.out.println(new String(data));
 
                             // 自定义解析过程，你在实际使用过程中可以按照自己的需求在接收到数据后对数据进行解析
                             if (data == null || data.length < 1) {    //检查数据是否读取正确
                                 JOptionPane.showMessageDialog(null, "读取数据过程中未获取到有效数据！请检查设备或程序！", "错误", JOptionPane.INFORMATION_MESSAGE);
                                 System.exit(0);
                             } else {
-                                String dataOriginal = new String(data);
-                                System.out.println(dataOriginal);
+
+                                int[] v = parseData(data);
+
+                                for(int i=0; i< v.length; ++i){
+                                    System.out.printf("=[%d]", v[i]);
+                                }
+
 //                                String dataOriginal = new String(data);    //将字节数组数据转换位为保存了原始数据的字符串
 //                                String dataValid = "";    //有效数据（用来保存原始数据字符串去除最开头*号以后的字符串）
 //                                String[] elements = null;    //用来保存按空格拆分原始字符串后得到的字符串数组
@@ -209,6 +227,26 @@ public class SerialportManager {
 
             }
 
+        }
+
+
+        private int[] parseData(byte[] data) {
+
+            if (data != null && data.length > 0) {
+
+                int length = data.length;
+                int retArrayCount = length / 3;
+                int[] retArray = new int[retArrayCount];
+                for (int i = 0; i < retArrayCount; ++i) {
+                    int index0 = i * 3;
+                    if (data[index0] == 0x01) {
+                        int v = NumberUtil.byte2ToUnsignedShort(data, index0 + 1);
+                        retArray[i] = v;
+                    }
+                }
+                return retArray;
+            }
+            return null;
         }
 
 

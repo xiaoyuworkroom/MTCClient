@@ -9,10 +9,10 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="xiaoyu.mtc.controller.SerialportPeripheralConnectionController">
    <children>
-      <Button layoutX="150.0" layoutY="104.0" mnemonicParsing="false" onAction="#Connection" prefWidth="64.0" text="连接" />
+      <Button layoutX="150.0" layoutY="104.0" onAction="#Connection" mnemonicParsing="false" prefWidth="64.0" text="连接" />
       <Button fx:id="btnRefresh" layoutX="78.0" layoutY="104.0" mnemonicParsing="false" onAction="#Refresh" prefHeight="23.0" prefWidth="64.0" text="刷新" />
       <ComboBox fx:id="comboBoxSerialPort" layoutX="81.0" layoutY="18.0" prefHeight="23.0" prefWidth="133.0" />
-      <TextField fx:id="textFieldBaudrate" layoutX="81.0" layoutY="55.0" prefHeight="23.0" prefWidth="133.0" promptText="波特率" text="9600" />
+      <TextField fx:id="textFieldBaudrate" layoutX="81.0" layoutY="55.0" prefHeight="23.0" prefWidth="133.0" promptText="波特率" text="3000000" />
       <Label layoutX="19.0" layoutY="22.0" text="端      口" />
       <Label layoutX="19.0" layoutY="59.0" text="波特率" />
    </children>

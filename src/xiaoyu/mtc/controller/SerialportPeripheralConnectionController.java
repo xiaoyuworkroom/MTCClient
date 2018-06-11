@@ -2,28 +2,22 @@ package xiaoyu.mtc.controller;
 
 import gnu.io.SerialPort;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import xiaoyu.mtc.core.serialport.SerialportManager;
-import xiaoyu.mtc.util.SerialPort.SerialPortTool;
-import xiaoyu.mtc.util.SerialPort.serialException.NoSuchPort;
-import xiaoyu.mtc.util.SerialPort.serialException.NotASerialPort;
-import xiaoyu.mtc.util.SerialPort.serialException.PortInUse;
-import xiaoyu.mtc.util.SerialPort.serialException.SerialPortParameterFailure;
-
-import java.util.ArrayList;
+import xiaoyu.mtc.util.NumberUtil;
+import xiaoyu.mtc.util.SerialPort.serialException.*;
 
 public class SerialportPeripheralConnectionController {
 
     public TextField textFieldBaudrate;
     public ComboBox comboBoxSerialPort;
+
+
 
     @FXML
     public void initialize() {
@@ -39,6 +33,14 @@ public class SerialportPeripheralConnectionController {
         RefreshSerialPort();
     }
 
+
+    /**
+     * @param actionEvent
+     * @throws SerialPortParameterFailure
+     * @throws NoSuchPort
+     * @throws PortInUse
+     * @throws NotASerialPort
+     */
     public void Connection(ActionEvent actionEvent) throws SerialPortParameterFailure, NoSuchPort, PortInUse, NotASerialPort {
 
         String selectedV = (String) comboBoxSerialPort.getSelectionModel().getSelectedItem();
@@ -67,8 +69,20 @@ public class SerialportPeripheralConnectionController {
             return;
         }
 
-        SerialportManager.getInstance().Connection(selectedV, Integer.parseInt(baudrate));
+        //连接
+        SerialportManager.getInstance().connection(selectedV, Integer.parseInt(baudrate));
         SerialPort port = SerialportManager.getInstance().getSerialPort();
         System.out.println(port.toString());
+
+        //发送数据到设备
+        try {
+            byte[] order  = NumberUtil.intToByte4(100);
+            SerialportManager.getInstance().sendToPort(order);
+        } catch (SerialPortOutputStreamCloseFailure serialPortOutputStreamCloseFailure) {
+            serialPortOutputStreamCloseFailure.printStackTrace();
+        } catch (SendDataToSerialPortFailure sendDataToSerialPortFailure) {
+            sendDataToSerialPortFailure.printStackTrace();
+        }
+
     }
 }
