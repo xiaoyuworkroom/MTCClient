@@ -17,12 +17,13 @@ public class SerialportPeripheralConnectionController {
     public TextField textFieldBaudrate;
     public ComboBox comboBoxSerialPort;
 
-
+    public SerialportPeripheralConnectionController(){
+    }
 
     @FXML
     public void initialize() {
-        RefreshSerialPort();
     }
+
 
     private void RefreshSerialPort() {
         ObservableList<String> observableList = FXCollections.observableArrayList(SerialportManager.getInstance().getSerialPortList());
@@ -57,20 +58,20 @@ public class SerialportPeripheralConnectionController {
             return;
         }
 
-        String baudrate = textFieldBaudrate.getText();
-        if(baudrate == null || baudrate.isEmpty())
-        {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("警告");
-            alert.setHeaderText("波特率!");
-            alert.setContentText("请指定波特率!");
-
-            alert.showAndWait();
-            return;
-        }
+//        String baudrate = textFieldBaudrate.getText();
+//        if(baudrate == null || baudrate.isEmpty())
+//        {
+//            Alert alert = new Alert(Alert.AlertType.WARNING);
+//            alert.setTitle("警告");
+//            alert.setHeaderText("波特率!");
+//            alert.setContentText("请指定波特率!");
+//
+//            alert.showAndWait();
+//            return;
+//        }
 
         //连接
-        SerialportManager.getInstance().connection(selectedV, Integer.parseInt(baudrate));
+        SerialportManager.getInstance().connection(selectedV,3000000);
         SerialPort port = SerialportManager.getInstance().getSerialPort();
         System.out.println(port.toString());
 

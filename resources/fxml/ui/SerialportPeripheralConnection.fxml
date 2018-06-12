@@ -4,17 +4,14 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="xiaoyu.mtc.controller.SerialportPeripheralConnectionController">
+<AnchorPane prefHeight="113.0" prefWidth="281.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="xiaoyu.mtc.controller.SerialportPeripheralConnectionController">
    <children>
-      <Button layoutX="150.0" layoutY="104.0" onAction="#Connection" mnemonicParsing="false" prefWidth="64.0" text="连接" />
-      <Button fx:id="btnRefresh" layoutX="78.0" layoutY="104.0" mnemonicParsing="false" onAction="#Refresh" prefHeight="23.0" prefWidth="64.0" text="刷新" />
-      <ComboBox fx:id="comboBoxSerialPort" layoutX="81.0" layoutY="18.0" prefHeight="23.0" prefWidth="133.0" />
-      <TextField fx:id="textFieldBaudrate" layoutX="81.0" layoutY="55.0" prefHeight="23.0" prefWidth="133.0" promptText="波特率" text="3000000" />
-      <Label layoutX="19.0" layoutY="22.0" text="端      口" />
-      <Label layoutX="19.0" layoutY="59.0" text="波特率" />
+      <Button layoutX="83.0" layoutY="61.0" mnemonicParsing="false" onAction="#Connection" prefHeight="23.0" prefWidth="194.0" text="连接" />
+      <Button fx:id="btnRefresh" layoutX="218.0" layoutY="22.0" mnemonicParsing="false" onAction="#Refresh" prefHeight="23.0" prefWidth="60.0" text="刷新" />
+      <ComboBox fx:id="comboBoxSerialPort" layoutX="83.0" layoutY="22.0" prefHeight="23.0" prefWidth="130.0" />
+      <Label layoutX="21.0" layoutY="26.0" text="端      口" />
    </children>
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

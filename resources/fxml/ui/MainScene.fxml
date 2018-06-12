@@ -19,7 +19,7 @@ fx:controller="xiaoyu.mtc.controller.MainController">
    <children>
       <ToolBar prefHeight="102.0" prefWidth="600.0">
         <items>
-           <Button fx:id="btnSampling" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" text="采样" />
+           <Button fx:id="btnSampling" mnemonicParsing="false" onAction="#Sampling" prefHeight="64.0" prefWidth="64.0" text="采样" />
            <Button fx:id="btnDataAnalysis" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" text="数据分析" />
            <Button fx:id="btnReport" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" text="报告" />
             <Separator orientation="VERTICAL" />
